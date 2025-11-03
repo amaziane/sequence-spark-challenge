@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { QuestionDisplay } from '../components/QuestionDisplay';
 import { AnswerInput } from '../components/AnswerInput';
 import { Feedback } from '../components/Feedback';
@@ -10,6 +12,7 @@ import { generateQuestion } from '../services/generator.service';
 import { getRandomCustom } from '../services/custom.service';
 
 const Game = () => {
+  const { t } = useTranslation();
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
@@ -59,14 +62,15 @@ const Game = () => {
 
   return (
     <div className="min-h-screen bg-background py-8 px-4 relative">
+      <LanguageSwitcher />
       <ScoreDisplay score={score} />
       
       <div className="max-w-xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary mb-2">
-            Arithmetic Sequences
+            {t('title')}
           </h1>
-          <p className="text-muted-foreground">Complete the pattern!</p>
+          <p className="text-muted-foreground">{t('subtitle')}</p>
         </div>
 
         <div className="bg-card p-8 rounded-2xl shadow-xl border-2 border-border">
@@ -85,14 +89,14 @@ const Game = () => {
               onClick={loadNextQuestion}
               className="flex-1 hover:scale-105 transition-transform"
             >
-              Skip Question
+              {t('skipQuestion')}
             </Button>
             <Link to="/admin" className="flex-1">
               <Button 
                 variant="secondary" 
                 className="w-full hover:scale-105 transition-transform"
               >
-                Admin Mode
+                {t('adminMode')}
               </Button>
             </Link>
           </div>
@@ -100,9 +104,9 @@ const Game = () => {
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
           <div className="mb-2">
-            {score < 50 && '⭐ Basic patterns'}
-            {score >= 50 && score < 150 && '⭐⭐ Alternating patterns unlocked!'}
-            {score >= 150 && '⭐⭐⭐ Expert mode - Step growth unlocked!'}
+            {score < 50 && t('basicPatterns')}
+            {score >= 50 && score < 150 && t('alternatingUnlocked')}
+            {score >= 150 && t('expertMode')}
           </div>
         </div>
       </div>

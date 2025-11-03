@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 interface FeedbackProps {
   type: 'correct' | 'wrong' | null;
   explanation?: string;
@@ -5,6 +7,7 @@ interface FeedbackProps {
 
 // Displays feedback animation after answer submission
 export const Feedback = ({ type, explanation }: FeedbackProps) => {
+  const { t } = useTranslation();
   if (!type) return null;
 
   return (
@@ -16,12 +19,14 @@ export const Feedback = ({ type, explanation }: FeedbackProps) => {
       }`}
     >
       {type === 'correct' ? (
-        <span>🎉 Correct! Well done!</span>
+        <span>{t('correct')}</span>
       ) : (
         <div>
-          <div>❌ Not quite right. Try again!</div>
+          <div>{t('wrong')}</div>
           {explanation && (
-            <div className="text-sm mt-2 opacity-90">{explanation}</div>
+            <div className="text-sm mt-2 opacity-90">
+              {t(explanation)}
+            </div>
           )}
         </div>
       )}

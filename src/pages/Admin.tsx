@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
@@ -8,6 +10,7 @@ import { addCustomQuestion, getAllCustomQuestions } from '../services/custom.ser
 import { useToast } from '../hooks/use-toast';
 
 const Admin = () => {
+  const { t } = useTranslation();
   const [sequenceInput, setSequenceInput] = useState('');
   const [answerInput, setAnswerInput] = useState('');
   const [explanationInput, setExplanationInput] = useState('');
@@ -27,8 +30,8 @@ const Admin = () => {
     
     if (sequence.length < 4) {
       toast({
-        title: 'Invalid Sequence',
-        description: 'Please enter at least 4 numbers separated by commas',
+        title: t('invalidSequence'),
+        description: t('invalidSequenceDesc'),
         variant: 'destructive',
       });
       return;
@@ -36,8 +39,8 @@ const Admin = () => {
     
     if (isNaN(answer)) {
       toast({
-        title: 'Invalid Answer',
-        description: 'Please enter a valid number for the answer',
+        title: t('invalidAnswer'),
+        description: t('invalidAnswerDesc'),
         variant: 'destructive',
       });
       return;
@@ -46,13 +49,13 @@ const Admin = () => {
     addCustomQuestion({
       sequence,
       answer,
-      explanation: explanationInput || 'Custom pattern',
+      explanation: explanationInput || 'patternCustom',
       difficulty: 1,
     });
     
     toast({
-      title: 'Success!',
-      description: 'Custom challenge added successfully',
+      title: t('success'),
+      description: t('customAdded'),
     });
     
     setSequenceInput('');
@@ -65,56 +68,58 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-background py-8 px-4">
       <div className="max-w-2xl mx-auto">
+        <LanguageSwitcher />
+        
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold text-primary">Admin Mode</h1>
+          <h1 className="text-4xl font-bold text-primary">{t('adminTitle')}</h1>
           <Link to="/">
-            <Button variant="outline">Back to Game</Button>
+            <Button variant="outline">{t('backToGame')}</Button>
           </Link>
         </div>
 
         <div className="bg-card p-8 rounded-2xl shadow-xl border-2 border-border mb-6">
-          <h2 className="text-2xl font-bold mb-6">Add Custom Challenge</h2>
+          <h2 className="text-2xl font-bold mb-6">{t('addCustomChallenge')}</h2>
           
           <form onSubmit={handleAddCustom} className="space-y-6">
             <div>
               <Label htmlFor="sequence" className="text-lg">
-                Sequence (comma separated)
+                {t('sequence')}
               </Label>
               <Input
                 id="sequence"
                 value={sequenceInput}
                 onChange={(e) => setSequenceInput(e.target.value)}
-                placeholder="e.g., 2, 4, 6, 8"
+                placeholder={t('sequencePlaceholder')}
                 className="mt-2 text-lg"
               />
               <p className="text-sm text-muted-foreground mt-1">
-                Enter at least 4 numbers
+                {t('sequenceHelper')}
               </p>
             </div>
 
             <div>
               <Label htmlFor="answer" className="text-lg">
-                Correct Answer
+                {t('correctAnswer')}
               </Label>
               <Input
                 id="answer"
                 type="number"
                 value={answerInput}
                 onChange={(e) => setAnswerInput(e.target.value)}
-                placeholder="e.g., 10"
+                placeholder={t('answerPlaceholder')}
                 className="mt-2 text-lg"
               />
             </div>
 
             <div>
               <Label htmlFor="explanation" className="text-lg">
-                Explanation (optional)
+                {t('explanation')}
               </Label>
               <Textarea
                 id="explanation"
                 value={explanationInput}
                 onChange={(e) => setExplanationInput(e.target.value)}
-                placeholder="e.g., Pattern: add 2 each time"
+                placeholder={t('explanationPlaceholder')}
                 className="mt-2 text-lg"
                 rows={3}
               />
@@ -125,15 +130,15 @@ const Admin = () => {
               size="lg" 
               className="w-full text-lg hover:scale-105 transition-transform"
             >
-              Add Custom Challenge
+              {t('addChallenge')}
             </Button>
           </form>
         </div>
 
         <div className="bg-card p-8 rounded-2xl shadow-xl border-2 border-border">
-          <h2 className="text-2xl font-bold mb-4">Custom Questions</h2>
+          <h2 className="text-2xl font-bold mb-4">{t('customQuestions')}</h2>
           {customQuestions.length === 0 ? (
-            <p className="text-muted-foreground">No custom questions yet</p>
+            <p className="text-muted-foreground">{t('noCustomQuestions')}</p>
           ) : (
             <div className="space-y-3">
               {customQuestions.map((q, idx) => (
@@ -145,7 +150,7 @@ const Admin = () => {
                     {q.sequence.join(', ')}, <strong className="text-success">?</strong> → {q.answer}
                   </div>
                   <div className="text-sm text-muted-foreground mt-1">
-                    {q.explanation}
+                    {t(q.explanation)}
                   </div>
                 </div>
               ))}

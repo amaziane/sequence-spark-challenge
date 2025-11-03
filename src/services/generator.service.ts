@@ -19,7 +19,7 @@ const generateMultiplyPlus = (): Question => {
   return {
     sequence: sequence.slice(0, 4),
     answer,
-    explanation: 'Pattern: multiply by 3, then add 1, alternating',
+    explanation: 'patternMultiplyPlus',
     difficulty: 1,
   };
 };
@@ -33,7 +33,7 @@ const generateLinearIncrement = (): Question => {
   return {
     sequence: sequence.slice(0, 4),
     answer: sequence[4],
-    explanation: `Pattern: add ${increment} each time`,
+    explanation: 'patternLinearIncrement',
     difficulty: 1,
   };
 };
@@ -47,7 +47,7 @@ const generateDecreasing = (): Question => {
   return {
     sequence: sequence.slice(0, 4),
     answer: sequence[4],
-    explanation: 'Pattern: subtract 2 each time',
+    explanation: 'patternDecreasing',
     difficulty: 1,
   };
 };
@@ -71,7 +71,7 @@ const generateAlternatingSign = (): Question => {
   return {
     sequence: sequence.slice(0, 4),
     answer,
-    explanation: 'Pattern: add 2, then subtract 1, alternating',
+    explanation: 'patternAlternatingSign',
     difficulty: 2,
   };
 };
@@ -88,7 +88,7 @@ const generateStepGrowth = (): Question => {
   return {
     sequence: sequence.slice(0, 4),
     answer: sequence[4],
-    explanation: 'Pattern: add 1, then add 2, then add 3, then add 4',
+    explanation: 'patternStepGrowth',
     difficulty: 3,
   };
 };

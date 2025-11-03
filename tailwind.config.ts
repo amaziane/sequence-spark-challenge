@@ -31,6 +31,10 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -80,10 +84,27 @@ export default {
             height: "0",
           },
         },
+        "correct-pulse": {
+          "0%, 100%": {
+            transform: "scale(1)",
+            boxShadow: "0 0 0 0 hsl(var(--success) / 0.7)",
+          },
+          "50%": {
+            transform: "scale(1.05)",
+            boxShadow: "0 0 20px 10px hsl(var(--success) / 0)",
+          },
+        },
+        "wrong-shake": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "10%, 30%, 50%, 70%, 90%": { transform: "translateX(-8px)" },
+          "20%, 40%, 60%, 80%": { transform: "translateX(8px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "correct-pulse": "correct-pulse 0.6s ease-out",
+        "wrong-shake": "wrong-shake 0.5s ease-out",
       },
     },
   },
